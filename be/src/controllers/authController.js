@@ -7,7 +7,7 @@ const JWT_EXPIRES_IN = '7d';
 
 export async function register(req, res) {
   try {
-    const { email, password } = req.body;
+    const { email, password, fullName } = req.body;
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required' });
     }
@@ -18,10 +18,10 @@ export async function register(req, res) {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = await User.create({ email, passwordHash });
+    const user = await User.create({ email, passwordHash, fullName });
 
     return res.status(201).json({
-      user: { id: user._id, email: user.email },
+      user: { id: user._id, email: user.email, fullName: user.fullName },
     });
   } catch (err) {
     console.error('Register error', err);
@@ -52,7 +52,7 @@ export async function login(req, res) {
 
     return res.json({
       token,
-      user: { id: user._id, email: user.email },
+      user: { id: user._id, email: user.email, fullName: user.fullName },
     });
   } catch (err) {
     console.error('Login error', err);

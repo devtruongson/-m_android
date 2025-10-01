@@ -5,6 +5,10 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
+import userRoutes from './routes/user.js';
+import productRoutes from './routes/products.js';
+import cartRoutes from './routes/cart.js';
+import orderRoutes from './routes/orders.js';
 
 dotenv.config();
 
@@ -19,6 +23,10 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/orders', orderRoutes);
 
 const PORT = process.env.PORT || 4000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/healthymart';
